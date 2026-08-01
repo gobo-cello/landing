@@ -31,6 +31,10 @@ header {
 	max-width: 42rem;
 	margin: 0 auto;
 	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
 }
 
 main {
