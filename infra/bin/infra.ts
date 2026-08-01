@@ -2,6 +2,7 @@
 import path from "node:path";
 import { App, RemovalPolicy } from "aws-cdk-lib/core";
 import { loadLandingConfiguration } from "../lib/config/environments";
+import { renderSiteContent } from "../lib/site-content";
 import { CertificateStack } from "../lib/stacks/certificate-stack";
 import { GithubDeployRoleStack } from "../lib/stacks/github-deploy-role-stack";
 import { HostingStack } from "../lib/stacks/hosting-stack";
@@ -11,7 +12,10 @@ const configuration = loadLandingConfiguration();
 
 // site/への絶対path。landingはbuildを持たない素の静的HTML/CSSであり、
 // infraとは別のtop-levelディレクトリのため、実行ファイルからの相対pathで解決する。
-const siteContentPath = path.join(__dirname, "..", "..", "site");
+const siteSourcePath = path.join(__dirname, "..", "..", "site");
+const siteContentPath = renderSiteContent(siteSourcePath, {
+	BLOG_DOMAIN_NAME: configuration.blogDomainName,
+});
 
 new GithubDeployRoleStack(app, "ProductionGithubDeployRoleStack", {
 	env: configuration.production,

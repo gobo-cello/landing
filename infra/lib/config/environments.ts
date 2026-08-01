@@ -1,5 +1,5 @@
 import { type AwsAccountId, parseAwsAccountId } from "./accounts";
-import { parseApexDomainName } from "./dns";
+import { parseApexDomainName, parseBlogDomainName } from "./dns";
 
 const supportedAwsRegions = ["us-east-1"] as const;
 
@@ -17,6 +17,7 @@ export type LandingEnvironment = (typeof landingEnvironments)[number];
 export interface LandingConfiguration {
 	readonly production: AwsEnvironment;
 	readonly apexDomainName: string;
+	readonly blogDomainName: string;
 }
 
 class MissingEnvironmentVariableError extends Error {
@@ -50,6 +51,9 @@ export function loadLandingConfiguration(): LandingConfiguration {
 		},
 		apexDomainName: parseApexDomainName(
 			readRequiredEnvironmentVariable("APEX_DOMAIN_NAME"),
+		),
+		blogDomainName: parseBlogDomainName(
+			readRequiredEnvironmentVariable("BLOG_DOMAIN_NAME"),
 		),
 	} satisfies LandingConfiguration;
 }

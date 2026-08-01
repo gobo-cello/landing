@@ -38,15 +38,18 @@ jobs:
         env:
           AWS_LANDING_PRODUCTION_ACCOUNT_ID: ${{ vars.AWS_LANDING_PRODUCTION_ACCOUNT_ID }}
           APEX_DOMAIN_NAME: ${{ vars.APEX_DOMAIN_NAME }}
+          BLOG_DOMAIN_NAME: ${{ vars.BLOG_DOMAIN_NAME }}
       - name: Deploy ProductionCertificateStack
         working-directory: infra
         run: npx cdk deploy ProductionCertificateStack --require-approval never
         env:
           AWS_LANDING_PRODUCTION_ACCOUNT_ID: ${{ vars.AWS_LANDING_PRODUCTION_ACCOUNT_ID }}
           APEX_DOMAIN_NAME: ${{ vars.APEX_DOMAIN_NAME }}
+          BLOG_DOMAIN_NAME: ${{ vars.BLOG_DOMAIN_NAME }}
       - name: Deploy ProductionHostingStack
         working-directory: infra
         run: npx cdk deploy ProductionHostingStack --require-approval never
         env:
           AWS_LANDING_PRODUCTION_ACCOUNT_ID: ${{ vars.AWS_LANDING_PRODUCTION_ACCOUNT_ID }}
           APEX_DOMAIN_NAME: ${{ vars.APEX_DOMAIN_NAME }}
+          BLOG_DOMAIN_NAME: ${{ vars.BLOG_DOMAIN_NAME }}

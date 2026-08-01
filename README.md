@@ -240,7 +240,7 @@ GitHub ActionsからAWSへは、OIDCによる一時認証だけを使用しま�
 5. 次のGitHub Variablesを登録します。
 
    - Repository Variable: `AWS_LANDING_PRODUCTION_ACCOUNT_ID`
-   - Environment `production` Variables: `AWS_LANDING_PRODUCTION_DEPLOY_ROLE_ARN`(手順3のARN)、`APEX_DOMAIN_NAME`
+   - Environment `production` Variables: `AWS_LANDING_PRODUCTION_DEPLOY_ROLE_ARN`(手順3のARN)、`APEX_DOMAIN_NAME`、`BLOG_DOMAIN_NAME`(`site/index.html`の`{{BLOG_DOMAIN_NAME}}`へdeploy時に埋め込むリンク先ドメイン)
 
 以降は、Pull Requestでの`cdk diff`、`main`へのmergeによる`deploy.yml`の自動実行で運用します。
 

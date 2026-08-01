@@ -1,5 +1,5 @@
 import { describe, expect, it, test } from "vitest";
-import { parseApexDomainName } from "../lib/config/dns";
+import { parseApexDomainName, parseBlogDomainName } from "../lib/config/dns";
 
 describe("parseApexDomainName", () => {
 	describe("空でない文字列が与えられた場合", () => {
@@ -11,6 +11,20 @@ describe("parseApexDomainName", () => {
 	describe("空でない文字列以外が与えられた場合", () => {
 		test.each([undefined, null, ""])("エラーを投げる: %p", (value: unknown) => {
 			expect(() => parseApexDomainName(value)).toThrow();
+		});
+	});
+});
+
+describe("parseBlogDomainName", () => {
+	describe("空でない文字列が与えられた場合", () => {
+		it("そのまま受け入れる", () => {
+			expect(parseBlogDomainName("blog.example.com")).toBe("blog.example.com");
+		});
+	});
+
+	describe("空でない文字列以外が与えられた場合", () => {
+		test.each([undefined, null, ""])("エラーを投げる: %p", (value: unknown) => {
+			expect(() => parseBlogDomainName(value)).toThrow();
 		});
 	});
 });
