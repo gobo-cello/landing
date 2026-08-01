@@ -1,0 +1,17 @@
+{
+	"name": "landing",
+	"scripts": {
+		"check": "biome check --write .",
+		"check:unsafe": "biome check --write --unsafe .",
+		"knip": "knip",
+		"knip:production": "knip --production --strict",
+		"prepare": "lefthook install"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.6",
+		"@types/node": "^26.1.2",
+		"knip": "^6.29.0",
+		"lefthook": "^2.1.10",
+		"typescript": "^7.0.2"
+	}
+}

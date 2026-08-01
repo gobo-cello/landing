@@ -1,0 +1,36 @@
+glob_matcher: doublestar
+
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      glob: "*.{js,jsx,ts,tsx,json,jsonc}"
+      run: npx biome check --write --unsafe {staged_files}
+      stage_fixed: true
+
+pre-push:
+  parallel: true
+  commands:
+    build:
+      glob: "infra/**/*"
+      run: npm run --prefix infra build
+    jest:
+      glob: "infra/**/*"
+      run: npm --prefix infra test
+    cdk-synth:
+      glob: "infra/**/*"
+      run: npm run --prefix infra cdk synth
+    knip:
+      run: npm run knip
+    knip-production:
+      run: npm run knip:production
+
+commit-msg:
+  commands:
+    conventional-commit:
+      run: |
+        MSG=$(head -1 {1})
+        echo "$MSG" | grep -Eq '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^)]+\))?: .+' || {
+          echo "コミットメッセージは Conventional Commits (<type>(<scope>): <要約>) に従ってください: $MSG" >&2
+          exit 1
+        }

@@ -1,0 +1,41 @@
+name: Setup Node and install dependencies
+description: setup-node と npm cache の復元・npm ci を行う。cache の保存は main への push 時のみ行う。
+
+inputs:
+  working-directory:
+    description: "npm ci を実行するディレクトリ"
+    required: false
+    default: "."
+  cache-write:
+    description: "true の場合、cache miss 時に npm cache を保存する(main 専用)"
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      with:
+        node-version-file: ".node-version"
+
+    - id: cache-key
+      shell: bash
+      run: echo "key=npm-${{ runner.os }}-${{ inputs.working-directory }}-${{ hashFiles(format('{0}/package-lock.json', inputs.working-directory)) }}" >> "$GITHUB_OUTPUT"
+
+    - id: cache-restore
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      with:
+        path: ~/.npm
+        key: ${{ steps.cache-key.outputs.key }}
+        restore-keys: |
+          npm-${{ runner.os }}-${{ inputs.working-directory }}-
+
+    - working-directory: ${{ inputs.working-directory }}
+      run: npm ci --ignore-scripts
+      shell: bash
+
+    - if: inputs.cache-write == 'true' && steps.cache-restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      with:
+        path: ~/.npm
+        key: ${{ steps.cache-key.outputs.key }}

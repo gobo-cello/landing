@@ -1,0 +1,21 @@
+name: Main CI
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  warm-npm-cache:
+    runs-on: ubuntu-slim
+    strategy:
+      matrix:
+        working-directory: [".", "infra"]
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-node-npm
+        with:
+          working-directory: ${{ matrix.working-directory }}
+          cache-write: 'true'

@@ -1,0 +1,25 @@
+# Build output
+*.js
+!jest.config.js
+*.d.ts
+
+# Dependencies
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# Local environment values
+.env
+.env.*
+!.env.example
+
+# AWS credentials and local configuration
+.aws/
+
+# OS
+.DS_Store
+
+# Obsidian
+.obsidian
