@@ -105,7 +105,7 @@ apex domain直下の静的ランディングページを配信するリポジト
 - `infra/lib/config/*.ts`: 環境変数のparse処理
 - `infra/.env.example`: ローカル開発用の一覧
 - `.github/workflows/deploy.yml`: 全ての`cdk deploy`ステップのenv。`bin/infra.ts`はターゲットのstackに関わらず全stackを構築するため、「このstackはこの環境変数を使わないから不要」という判断はできない
-- `.github/workflows/pr-ci-gate.yml`: `cdk-synth`・`cdk-diff`ジョブのenv
+- `.github/workflows/pr-ci-gate.yml`: `cdk-synth`ジョブのenv
 
 ## GitHub Actions のバージョン固定
 

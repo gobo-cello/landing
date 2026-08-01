@@ -41,7 +41,7 @@ apex hosted zoneの所有、AWS Organizations全体の共通基盤(監査ログ�
 
 このリポジトリがデプロイ対象とするのは、次のAWSアカウントです。
 
-- `landing-production`: 本番ランディングページのワークロード。sandbox環境は持たず、Pull Requestごとの`cdk diff`を安全網とします。
+- `landing-production`: 本番ランディングページのワークロード。sandbox環境は持ちません。
 
 このアカウントは、AWS Organizations配下のProduction OUに所属します。Organizationsの管理、CloudTrailなどの監査ログ基盤、Management accountの運用は、`aws-platform`リポジトリの責務であり、このリポジトリでは前提として扱います。
 
@@ -242,7 +242,7 @@ GitHub ActionsからAWSへは、OIDCによる一時認証だけを使用しま�
    - Repository Variable: `AWS_LANDING_PRODUCTION_ACCOUNT_ID`
    - Environment `production` Variables: `AWS_LANDING_PRODUCTION_DEPLOY_ROLE_ARN`(手順3のARN)、`APEX_DOMAIN_NAME`、`BLOG_DOMAIN_NAME`(`site/index.html`の`{{BLOG_DOMAIN_NAME}}`へdeploy時に埋め込むリンク先ドメイン)
 
-以降は、Pull Requestでの`cdk diff`、`main`へのmergeによる`deploy.yml`の自動実行で運用します。
+以降は、`main`へのmergeによる`deploy.yml`の自動実行で運用します。
 
 ## ドメインとDNSの連携手順
 
