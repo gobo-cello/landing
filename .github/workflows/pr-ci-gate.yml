@@ -54,28 +54,6 @@ jobs:
           APEX_DOMAIN_NAME: example.com
           BLOG_DOMAIN_NAME: blog.example.com
 
-  cdk-diff:
-    runs-on: ubuntu-slim
-    environment: production
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - uses: ./.github/actions/setup-node-npm
-        with:
-          working-directory: infra
-      - uses: aws-actions/configure-aws-credentials@517a711dbcd0e402f90c77e7e2f81e849156e31d # v6.2.2
-        with:
-          role-to-assume: ${{ vars.AWS_LANDING_PRODUCTION_DEPLOY_ROLE_ARN }}
-          aws-region: us-east-1
-      - working-directory: infra
-        run: npx cdk diff ProductionGithubDeployRoleStack ProductionCertificateStack ProductionHostingStack
-        env:
-          AWS_LANDING_PRODUCTION_ACCOUNT_ID: ${{ vars.AWS_LANDING_PRODUCTION_ACCOUNT_ID }}
-          APEX_DOMAIN_NAME: ${{ vars.APEX_DOMAIN_NAME }}
-          BLOG_DOMAIN_NAME: ${{ vars.BLOG_DOMAIN_NAME }}
-
   knip:
     strategy:
       fail-fast: false
@@ -104,7 +82,6 @@ jobs:
       - infra-build
       - infra-test
       - cdk-synth
-      - cdk-diff
       - knip
     if: ${{ always() && !cancelled() }}
     runs-on: ubuntu-slim
