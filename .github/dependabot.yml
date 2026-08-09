@@ -4,6 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
     groups:
       dependencies-major:
         patterns:
@@ -21,6 +23,8 @@ updates:
     directory: "/infra"
     schedule:
       interval: "daily"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
     groups:
       dependencies-major:
         patterns:
