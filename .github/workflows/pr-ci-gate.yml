@@ -20,6 +20,14 @@ jobs:
       - uses: ./.github/actions/setup-node-npm
       - run: npx biome ci --reporter=github .
 
+  actionlint:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - run: ./scripts/actionlint.sh -color
+        env:
+          GH_TOKEN: ${{ github.token }}
+
   infra-build:
     runs-on: ubuntu-slim
     steps:
@@ -79,6 +87,7 @@ jobs:
   pr-ci-gate:
     needs:
       - biome
+      - actionlint
       - infra-build
       - infra-test
       - cdk-synth
